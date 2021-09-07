@@ -36,18 +36,22 @@ class Person(db.Model):
     def get_person_id(id):
         Me = Person.query.get(id)
         Father = Person.query.filter_by(id=Me.father_id).first()
-        
+        if Father is None:
+            Father = []
         Mother = Person.query.filter_by(id=Me.mother_id).first()
-        
+        if Mother is None:
+            Mother = []
         Child = Person.query.filter( (Person.father_id == id) | (Person.mother_id == id) ).first()
- 
+        if Child is None:
+            Child = []
         family = {
             "father": Person.serialize(Father),
             "mother": Person.serialize(Mother),
             "me": Person.serialize(Me),
             "child": Person.serialize(Child)
+            
         }
-        return family
+        
    
     def create_person(name, last_name, rol, age, father_id, mother_id):
         person = Person(name=name, last_name=last_name, rol=rol, age=age, father_id=father_id, mother_id=mother_id)

@@ -39,7 +39,7 @@ def get_persons():
 @app.route('/member/<int:id>', methods = ['GET'])
 def get_person_id(id):
     person = Person.get_person_id(id)
-    
+        
     return jsonify(person), 200
 
 @app.route('/person', methods=['POST'])
